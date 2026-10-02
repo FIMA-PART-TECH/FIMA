@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>FIMA - Farming Assistant</title></head>
+<body>
+  <div>
+    <button onclick="setLang('EN')">EN</button>
+    <button onclick="setLang('FR')">FR</button>
+    <button onclick="setLang('SW')">SW</button>
+    <button onclick="setLang('LIN')">LIN</button>
+  </div>
+  <h1 id="welcome-text">Welcome to FIMA</h1>
+  <button id="diag-btn">Diagnose my plant</button>
+
+<script>
+const FIMA_TEXTS = {
+  EN: { welcome: "Welcome to FIMA - Global Farming Assistant", btn: "Diagnose my plant" },
+  FR: { welcome: "Bienvenue sur FIMA - Assistant Agricole Mondial", btn: "Diagnostiquer ma plante" },
+  SW: { welcome: "Karibu FIMA - Msaidizi wa Kilimo", btn: "Chunguza mmea wangu" },
+  LIN: { welcome: "Boyei malamu na FIMA - Mosungi ya Bilanga", btn: "Tala bilanga na ngai" }
+};
+function setLang(lang) {
+  localStorage.setItem('fima_lang', lang);
+  document.getElementById('welcome-text').innerText = FIMA_TEXTS[lang].welcome;
+  document.getElementById('diag-btn').innerText = FIMA_TEXTS[lang].btn;
+}
+setLang(localStorage.getItem('fima_lang') || 'EN');
+</script>
+</body>
+</html>
