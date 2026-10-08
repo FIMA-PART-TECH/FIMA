@@ -55,7 +55,7 @@ function diagnose(){
  const r=document.getElementById('result');
  r.style.display='block';
  if(!d){r.innerHTML='⚠️ Veuillez décrire le problème.'; return;}
- r.innerHTML='✅ <b>Analyse FIMA V2:</b><br><br>Nous avons bien reçu: "'+d+'"<br><br>🌿 <b>Conseil:</b> Pour Kasangulu, en cette saison, vérifiez l humidité du sol et traitez avec un fongicide bio si taches jaunes.<br><br><i>Photo analysée avec succès (mode démo V2).</i>';
+ r.innerHTML='✅ <b>Analyse FIMA V2 Mondiale:</b><br><br>Nous avons bien reçu: "'+d+'"<br><br>🌍 <b>Conseil adapté à votre localisation:</b> vérifiez l\'humidité du sol, l\'exposition et traitez avec un produit bio adapté si taches ou jaunissement.<br><br><i>Photo analysée avec succès (mode démo V2 mondiale).</i>';
 }
 setLang(localStorage.getItem('fima_lang')||'FR');
 </script>
