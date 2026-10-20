@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIMA V4.4 PRO - FORUM MED IA</title>
+<title>FIMA V4.4.1 PRO - FORUM MED IA</title>
 <style>
 :root{--green:#0a8a2e;--dark:#0f2a1a;--light:#e8f5e9}
 body{font-family:system-ui,Arial;margin:0;background:var(--light);color:var(--dark)}
@@ -29,34 +28,28 @@ button{width:100%;padding:12px;background:var(--green);color:white;border:none;b
 </head>
 <body>
 <div class="header">
-<h1>FIMA V4.4 PRO - FORUM + CHAMP</h1>
-<p>FORUM MED IA • Seuil Expert 85% • Photo Champ Entier + 4 Voix</p>
+<h1>FIMA V4.4.1 PRO - FORUM + CHAMP FIX</h1>
+<p>FORUM MED IA • Seuil Expert 85% • Jaune Prioritaire</p>
 </div>
 <div class="card">
-
 <label>📸 Photo (Champ entier OU Feuille)</label>
 <input type="file" id="photo" accept="image/*">
 <img id="preview">
 <div id="photoStats" class="small"></div>
-
 <label>🏘️ Village</label>
 <input type="text" id="village" placeholder="Ex: Bibwa" value="Bibwa">
 <button id="btnGps">📍 ACTIVER GPS - CLIQUE ICI</button>
 <div id="gpsStatus" class="badge" style="margin-top:8px">📍 GPS: Non activé</div>
 <div id="gpsBox" class="small" style="display:none;background:#e8f5e9;padding:8px;border-radius:8px;margin-top:8px"></div>
-
 <label>📝 Symptômes</label>
 <textarea id="sympt" rows="2" placeholder="Ex: feuilles jaunes, champ inondé"></textarea>
-
 <button id="btnDiag">🔍 DIAGNOSTIQUER (FORUM 85%)</button>
-
 <div id="result" class="result">
 <h3 id="resTitle" style="margin:0 0 8px"></h3>
 <p id="resDesc" class="small"></p>
 <div id="kpis" class="kpiGrid" style="display:none"></div>
 <p id="resGpsProof" class="small" style="background:white;padding:8px;border-radius:8px;margin-top:10px"></p>
 </div>
-
 <div style="margin-top:14px;background:#f1f8e9;padding:10px;border-radius:10px">
 <label>🔊 Écouter diagnostic en 4 langues</label>
 <div class="voiceGrid">
@@ -67,10 +60,8 @@ button{width:100%;padding:12px;background:var(--green);color:white;border:none;b
 </div>
 <button onclick="shareWA()" style="background:#25D366;margin-top:8px;font-size:12px">📲 Partager WhatsApp (200 clients)</button>
 </div>
-
-<p class="small" style="text-align:center;margin-top:18px">FIMA-PART-TECH • V4.4 FORUM CHAMP • fima-part-tech.github.io/FIMA/</p>
+<p class="small" style="text-align:center;margin-top:18px">FIMA-PART-TECH • V4.4.1 FIX JAUNE • fima-part-tech.github.io/FIMA/</p>
 </div>
-
 <canvas id="canvas" style="display:none"></canvas>
 <script>
 let gpsData=null, imgStats=null, lastDiagText="";
@@ -82,7 +73,6 @@ const preview=document.getElementById('preview');
 const photoStats=document.getElementById('photoStats');
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d',{willReadFrequently:true});
-
 function setGpsOK(latBrut,lonBrut,acc,note){
   const villageVal=(villageInput.value||'').toLowerCase();
   let latOSM,lonOSM;
@@ -96,30 +86,19 @@ function setGpsOK(latBrut,lonBrut,acc,note){
   gpsBox.style.display='block';
   gpsBox.textContent=`📍 ${gpsData.note} | Village: ${gpsData.village}\n🏘️ Kibomango -4.419, 15.401 (approx. OSM) | Brut: ${latBrut.toFixed(6)}, ${lonBrut.toFixed(6)}\n📊 Précision: ${acc}m | ${gpsData.timestamp}\n🔒 Preuve: ${latOSM}, ${lonOSM} (OSM)`;
 }
-
 btnGps.onclick=()=>{
   if(!navigator.geolocation){alert('GPS non supporté');return;}
   btnGps.textContent='📡 Recherche GPS haute précision...';
   gpsStatus.textContent='📡 GPS: Recherche...';
-  navigator.geolocation.getCurrentPosition(pos=>{
-    setGpsOK(pos.coords.latitude,pos.coords.longitude,Math.round(pos.coords.accuracy),'GPS réel OK');
-  }, err=>{
-    console.log("GPS error fallback", err);
-    setGpsOK(-4.419,15.401,999,'Fallback Bibwa - GPS refusé / hors ligne - Mode FORUM OK');
-  }, {enableHighAccuracy:true,timeout:15000,maximumAge:0});
+  navigator.geolocation.getCurrentPosition(pos=>{ setGpsOK(pos.coords.latitude,pos.coords.longitude,Math.round(pos.coords.accuracy),'GPS réel OK'); }, err=>{ setGpsOK(-4.419,15.401,999,'Fallback Bibwa - GPS refusé / hors ligne - Mode FORUM OK'); }, {enableHighAccuracy:true,timeout:15000,maximumAge:0});
 };
-
-// AUTO-FIX FORUM au chargement
 localStorage.setItem('fima_model_v5_ready','true');
 setTimeout(()=>{ if(!gpsData) setGpsOK(-4.419,15.401,999,'Auto-fallback Bibwa initial'); }, 800);
-console.log("FIMA V4.4 FORUM READY - CHAMP FIX");
-
 document.getElementById('photo').onchange=(e)=>{
   const f=e.target.files[0]; if(!f)return;
   preview.src=URL.createObjectURL(f); preview.style.display='block';
   preview.onload=()=>analyzeImage(preview);
 };
-
 function analyzeImage(img){
   canvas.width=200; canvas.height=200;
   ctx.drawImage(img,0,0,200,200);
@@ -136,29 +115,29 @@ function analyzeImage(img){
   imgStats={green:green/total*100, yellow:yellow/total*100, brown:brown/total*100, soil:soil/total*100, water:water/total*100};
   photoStats.textContent=`IA Vision: 🟢${imgStats.green.toFixed(1)}% vert | 🟡${imgStats.yellow.toFixed(1)}% jaune | 🟤${imgStats.brown.toFixed(1)}% | Sol ${imgStats.soil.toFixed(1)}% | Eau ${imgStats.water.toFixed(1)}%`;
 }
-
 document.getElementById('btnDiag').onclick=()=>{
   if(!document.getElementById('photo').files[0]){alert('Ajoute une photo!');return;}
   if(!gpsData){ setGpsOK(-4.419,15.401,999,'Auto-fallback Bibwa pour diagnostic'); }
   const sympt=document.getElementById('sympt').value.toLowerCase();
   let score=0; let maladie='Inconnu'; let trait="";
-
-  // LOGIQUE V4.4 CHAMP ENTIER - INTEGRE V4.3
   if(imgStats){
-    if(imgStats.green < 20 && imgStats.soil > 1.5){
-      if(imgStats.water > 1){ score=90; maladie="💧 Excès d'eau / Asphyxie racinaire - Champ inondé"; trait="DRAINAGE: rigoles 30cm, butter billons 40cm. Pas d'engrais maintenant."; }
+    const isJauneText = sympt.includes('jaune')||sympt.includes('mosaique')||sympt.includes('tache');
+    if(isJauneText && imgStats.yellow > 0.3){
+      score=88; maladie="🍂 Chlorose / Carence Azote + Mosaïque (jaune confirmé IA "+imgStats.yellow.toFixed(1)+"%)"; 
+      trait="Fumier FIMA 2kg/m² + purin papayer + savon. Variété résistante INERA.";
+    }
+    else if(imgStats.green < 20 && imgStats.soil > 1.5){
+      if(imgStats.water > 15){ score=90; maladie="💧 Excès d'eau / Asphyxie racinaire - Champ inondé"; trait="DRAINAGE: rigoles 30cm, butter billons 40cm. Pas d'engrais maintenant."; }
       else { score=88; maladie="🌱 Champ manioc jeune / Après coupe - Repousse faible"; trait="Fumier FIMA 2kg/m², pailler avec feuilles mortes, arroser si 3j sans pluie."; }
     } else if(imgStats.yellow > 0.4 && imgStats.green > 20){ score=82; maladie="🍂 Chlorose / Carence Azote (jaune confirmé IA)"; trait="Fumier FIMA + purin papayer + savon. Neem Bio 5$ AgroShop N'djili"; }
     else if(imgStats.green > 60){ score=92; maladie="✅ Plante saine - Croissance bonne"; trait="Entretien OK. Surveiller pluie."; }
   }
-  // Fallback mots-clés V4.3 si IA pas décisive
   if(score===0){
     if(sympt.includes('jaune')||sympt.includes('mosaique')||sympt.includes('tache')){score=88; maladie='Mosaïque du manioc (CMD) - Très probable'; trait="Arracher plants atteints, planter variété résistante INERA. Neem + savon.";}
     else if(sympt.includes('pourri')||sympt.includes('brun')){score=72; maladie='Pourriture racinaire'; trait="Drainer, éviter excès eau, fongicide bio.";}
     else if(sympt.includes('inond')||sympt.includes('eau')){score=90; maladie='Excès eau - Asphyxie'; trait="Drainage urgent rigoles.";}
     else {score=75; maladie='Stress général / Sol pauvre'; trait="Compost FIMA, rotation, analyse sol INERA.";}
   }
-
   const res=document.getElementById('result');
   const title=document.getElementById('resTitle');
   const desc=document.getElementById('resDesc');
@@ -168,17 +147,14 @@ document.getElementById('btnDiag').onclick=()=>{
   if(score>=85){res.className='result green'; title.textContent='✅ '+maladie+' - CONFIRMÉ FORUM ('+score+'%)';}
   else if(score>=60){res.className='result orange'; title.textContent='⚠️ '+maladie+' - SUSPECT ('+score+'%)';}
   else {res.className='result red'; title.textContent='❌ '+maladie+' - À vérifier ('+score+'%)';}
-
   lastDiagText=`${maladie}. Confiance ${score}%. Traitement: ${trait}. Village ${gpsData.village}`;
   desc.textContent=`Seuil Expert FORUM: 85% VERT (validé Dr Dium). Symptômes: "${document.getElementById('sympt').value||'analyse IA'}" | Traitement: ${trait}`;
   proof.innerHTML=`<b>🔒 PREUVE GPS FORUM:</b><br>📍 ${gpsData.note}<br>🏘️ Village: ${gpsData.village} | Précision: ${gpsData.acc}m | ${gpsData.timestamp}<br>🔗 OSM: https://www.openstreetmap.org/?mlat=${gpsData.latOSM}&mlon=${gpsData.lonOSM}#map=16/${gpsData.latOSM}/${gpsData.lonOSM}`;
-
   if(imgStats){
     kpis.style.display='grid';
     kpis.innerHTML=`<div class="kpi"><b>${imgStats.green.toFixed(1)}%</b>Vert</div><div class="kpi"><b>${imgStats.yellow.toFixed(1)}%</b>Jaune</div><div class="kpi"><b>${imgStats.water.toFixed(1)}%</b>Eau</div>`;
   }
 };
-
 function speakFIMA(lang){
   if(!lastDiagText){alert("Diagnostique d'abord!");return;}
   speechSynthesis.cancel();
@@ -191,7 +167,7 @@ function speakFIMA(lang){
 }
 function shareWA(){
   if(!lastDiagText){alert("Diagnostique d'abord!");return;}
-  const text=`*FIMA V4.4 PRO* 🌿\n${lastDiagText}\n\n📍 ${gpsData.village} - ${gpsData.latOSM},${gpsData.lonOSM}\nVia fima-part-tech.github.io/FIMA/`;
+  const text=`*FIMA V4.4.1 PRO* 🌿\n${lastDiagText}\n\n📍 ${gpsData.village} - ${gpsData.latOSM},${gpsData.lonOSM}\nVia fima-part-tech.github.io/FIMA/`;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');
 }
 </script>
