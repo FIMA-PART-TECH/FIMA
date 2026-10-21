@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIMA V4.4.1 PRO - FORUM MED IA</title>
+<title>FIMA V4.4.2 GLOBAL - AGRICULTEURS</title>
 <style>
 :root{--green:#0a8a2e;--dark:#0f2a1a;--light:#e8f5e9}
 body{font-family:system-ui,Arial;margin:0;background:var(--light);color:var(--dark)}
@@ -28,22 +28,22 @@ button{width:100%;padding:12px;background:var(--green);color:white;border:none;b
 </head>
 <body>
 <div class="header">
-<h1>FIMA V4.4.1 PRO - FORUM + CHAMP FIX</h1>
-<p>FORUM MED IA • Seuil Expert 85% • Jaune Prioritaire</p>
+<h1>FIMA V4.4.2 GLOBAL</h1>
+<p>Pour AGRICULTEURS du Monde • Seuil Expert 85% • FORUM MED IA</p>
 </div>
 <div class="card">
-<label>📸 Photo (Champ entier OU Feuille)</label>
+<label>📸 Photo Champ / Feuille - Pour Agriculteurs</label>
 <input type="file" id="photo" accept="image/*">
 <img id="preview">
 <div id="photoStats" class="small"></div>
-<label>🏘️ Village</label>
-<input type="text" id="village" placeholder="Ex: Bibwa" value="Bibwa">
-<button id="btnGps">📍 ACTIVER GPS - CLIQUE ICI</button>
+<label>🏘️ Village / Localité (Monde)</label>
+<input type="text" id="village" placeholder="Ex: Bibwa, Nsele, Nairobi, São Paulo" value="Bibwa">
+<button id="btnGps">📍 ACTIVER GPS - AGRICULTEURS</button>
 <div id="gpsStatus" class="badge" style="margin-top:8px">📍 GPS: Non activé</div>
 <div id="gpsBox" class="small" style="display:none;background:#e8f5e9;padding:8px;border-radius:8px;margin-top:8px"></div>
-<label>📝 Symptômes</label>
-<textarea id="sympt" rows="2" placeholder="Ex: feuilles jaunes, champ inondé"></textarea>
-<button id="btnDiag">🔍 DIAGNOSTIQUER (FORUM 85%)</button>
+<label>📝 Symptômes observés</label>
+<textarea id="sympt" rows="2" placeholder="Ex: feuilles jaunes"></textarea>
+<button id="btnDiag">🔍 DIAGNOSTIQUER POUR AGRICULTEURS (85%)</button>
 <div id="result" class="result">
 <h3 id="resTitle" style="margin:0 0 8px"></h3>
 <p id="resDesc" class="small"></p>
@@ -51,16 +51,16 @@ button{width:100%;padding:12px;background:var(--green);color:white;border:none;b
 <p id="resGpsProof" class="small" style="background:white;padding:8px;border-radius:8px;margin-top:10px"></p>
 </div>
 <div style="margin-top:14px;background:#f1f8e9;padding:10px;border-radius:10px">
-<label>🔊 Écouter diagnostic en 4 langues</label>
+<label>🔊 Écouter diagnostic - Pour Agriculteurs</label>
 <div class="voiceGrid">
 <button onclick="speakFIMA('fr')" style="font-size:12px">🇫🇷 Français</button>
 <button onclick="speakFIMA('en')" style="font-size:12px;background:#1565c0">🇬🇧 English</button>
 <button onclick="speakFIMA('sw')" style="font-size:12px;background:#ef6c00">🇰🇪 Swahili</button>
 <button onclick="speakFIMA('ln')" style="font-size:12px;background:#6a1b9a">🇨🇩 Lingala</button>
 </div>
-<button onclick="shareWA()" style="background:#25D366;margin-top:8px;font-size:12px">📲 Partager WhatsApp (200 clients)</button>
+<button onclick="shareWA()" style="background:#25D366;margin-top:8px;font-size:12px">📲 Partager aux Agriculteurs - WhatsApp</button>
 </div>
-<p class="small" style="text-align:center;margin-top:18px">FIMA-PART-TECH • V4.4.1 FIX JAUNE • fima-part-tech.github.io/FIMA/</p>
+<p class="small" style="text-align:center;margin-top:18px">FIMA-PART-TECH • V4.4.2 GLOBAL AGRICULTEURS • Application Mondiale</p>
 </div>
 <canvas id="canvas" style="display:none"></canvas>
 <script>
@@ -74,26 +74,25 @@ const photoStats=document.getElementById('photoStats');
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d',{willReadFrequently:true});
 function setGpsOK(latBrut,lonBrut,acc,note){
-  const villageVal=(villageInput.value||'').toLowerCase();
+  const villageVal=(villageInput.value||'Bibwa');
   let latOSM,lonOSM;
-  if(villageVal.includes('bibwa')){latOSM=-4.419; lonOSM=15.401; note='Bibwa (déclaré) → Kibomango approximé OSM';}
-  else {latOSM=Math.round(latBrut*1000)/1000; lonOSM=Math.round(lonBrut*1000)/1000; note=note||'Position approximée OSM';}
-  gpsData={latBrut,lonBrut,latOSM,lonOSM,acc,note,village:villageInput.value||'Bibwa',timestamp:new Date().toISOString()};
+  latOSM=Math.round(latBrut*1000)/1000; lonOSM=Math.round(lonBrut*1000)/1000;
+  gpsData={latBrut,lonBrut,latOSM,lonOSM,acc,note,village:villageVal,timestamp:new Date().toISOString()};
   localStorage.setItem('fima_last_gps', JSON.stringify(gpsData));
   localStorage.setItem('fima_model_v5_ready','true');
-  gpsStatus.textContent='✅ GPS: Activé ('+acc+'m)'; gpsStatus.className='badge badge-ok';
-  btnGps.textContent='✅ GPS ACTIVÉ - Re-cliquer pour actualiser';
+  gpsStatus.textContent='✅ GPS Agriculteurs Activé ('+acc+'m)'; gpsStatus.className='badge badge-ok';
+  btnGps.textContent='✅ GPS AGRICULTEURS ACTIVÉ';
   gpsBox.style.display='block';
-  gpsBox.textContent=`📍 ${gpsData.note} | Village: ${gpsData.village}\n🏘️ Kibomango -4.419, 15.401 (approx. OSM) | Brut: ${latBrut.toFixed(6)}, ${lonBrut.toFixed(6)}\n📊 Précision: ${acc}m | ${gpsData.timestamp}\n🔒 Preuve: ${latOSM}, ${lonOSM} (OSM)`;
+  gpsBox.textContent=`📍 Pour Agriculteurs - Village: ${gpsData.village}\n🌍 Position: ${latOSM}, ${lonOSM} (OSM Global) | Brut: ${latBrut.toFixed(6)}, ${lonBrut.toFixed(6)}\n📊 Précision: ${acc}m | ${gpsData.timestamp}\n🔒 Preuve Mondiale: ${latOSM}, ${lonOSM}`;
 }
 btnGps.onclick=()=>{
   if(!navigator.geolocation){alert('GPS non supporté');return;}
-  btnGps.textContent='📡 Recherche GPS haute précision...';
-  gpsStatus.textContent='📡 GPS: Recherche...';
-  navigator.geolocation.getCurrentPosition(pos=>{ setGpsOK(pos.coords.latitude,pos.coords.longitude,Math.round(pos.coords.accuracy),'GPS réel OK'); }, err=>{ setGpsOK(-4.419,15.401,999,'Fallback Bibwa - GPS refusé / hors ligne - Mode FORUM OK'); }, {enableHighAccuracy:true,timeout:15000,maximumAge:0});
+  btnGps.textContent='📡 Recherche GPS Agriculteurs...';
+  gpsStatus.textContent='📡 GPS Agriculteurs: Recherche...';
+  navigator.geolocation.getCurrentPosition(pos=>{ setGpsOK(pos.coords.latitude,pos.coords.longitude,Math.round(pos.coords.accuracy),'GPS Agriculteurs OK - Mondial'); }, err=>{ setGpsOK(-4.419,15.401,999,'Position par défaut - Mode Agriculteurs Mondial OK'); }, {enableHighAccuracy:true,timeout:15000,maximumAge:0});
 };
 localStorage.setItem('fima_model_v5_ready','true');
-setTimeout(()=>{ if(!gpsData) setGpsOK(-4.419,15.401,999,'Auto-fallback Bibwa initial'); }, 800);
+setTimeout(()=>{ if(!gpsData) setGpsOK(-4.419,15.401,999,'Auto-init Agriculteurs Mondial'); }, 800);
 document.getElementById('photo').onchange=(e)=>{
   const f=e.target.files[0]; if(!f)return;
   preview.src=URL.createObjectURL(f); preview.style.display='block';
@@ -113,30 +112,30 @@ function analyzeImage(img){
     else if(b>70 && b>g && g>50) water++;
   }
   imgStats={green:green/total*100, yellow:yellow/total*100, brown:brown/total*100, soil:soil/total*100, water:water/total*100};
-  photoStats.textContent=`IA Vision: 🟢${imgStats.green.toFixed(1)}% vert | 🟡${imgStats.yellow.toFixed(1)}% jaune | 🟤${imgStats.brown.toFixed(1)}% | Sol ${imgStats.soil.toFixed(1)}% | Eau ${imgStats.water.toFixed(1)}%`;
+  photoStats.textContent=`IA Vision Agriculteurs: 🟢${imgStats.green.toFixed(1)}% vert | 🟡${imgStats.yellow.toFixed(1)}% jaune | Sol ${imgStats.soil.toFixed(1)}% | Eau ${imgStats.water.toFixed(1)}%`;
 }
 document.getElementById('btnDiag').onclick=()=>{
   if(!document.getElementById('photo').files[0]){alert('Ajoute une photo!');return;}
-  if(!gpsData){ setGpsOK(-4.419,15.401,999,'Auto-fallback Bibwa pour diagnostic'); }
+  if(!gpsData){ setGpsOK(-4.419,15.401,999,'Auto-fallback Agriculteurs'); }
   const sympt=document.getElementById('sympt').value.toLowerCase();
   let score=0; let maladie='Inconnu'; let trait="";
   if(imgStats){
     const isJauneText = sympt.includes('jaune')||sympt.includes('mosaique')||sympt.includes('tache');
     if(isJauneText && imgStats.yellow > 0.3){
-      score=88; maladie="🍂 Chlorose / Carence Azote + Mosaïque (jaune confirmé IA "+imgStats.yellow.toFixed(1)+"%)"; 
+      score=88; maladie="🍂 Chlorose / Carence - Pour Agriculteurs (jaune confirmé "+imgStats.yellow.toFixed(1)+"%)"; 
       trait="Fumier FIMA 2kg/m² + purin papayer + savon. Variété résistante INERA.";
     }
     else if(imgStats.green < 20 && imgStats.soil > 1.5){
-      if(imgStats.water > 15){ score=90; maladie="💧 Excès d'eau / Asphyxie racinaire - Champ inondé"; trait="DRAINAGE: rigoles 30cm, butter billons 40cm. Pas d'engrais maintenant."; }
-      else { score=88; maladie="🌱 Champ manioc jeune / Après coupe - Repousse faible"; trait="Fumier FIMA 2kg/m², pailler avec feuilles mortes, arroser si 3j sans pluie."; }
-    } else if(imgStats.yellow > 0.4 && imgStats.green > 20){ score=82; maladie="🍂 Chlorose / Carence Azote (jaune confirmé IA)"; trait="Fumier FIMA + purin papayer + savon. Neem Bio 5$ AgroShop N'djili"; }
-    else if(imgStats.green > 60){ score=92; maladie="✅ Plante saine - Croissance bonne"; trait="Entretien OK. Surveiller pluie."; }
+      if(imgStats.water > 15){ score=90; maladie="💧 Excès d'eau / Asphyxie - Pour Agriculteurs"; trait="DRAINAGE: rigoles 30cm, butter billons 40cm. Pas d'engrais maintenant."; }
+      else { score=88; maladie="🌱 Champ jeune / Repousse - Pour Agriculteurs"; trait="Fumier FIMA 2kg/m², pailler, arroser si 3j sans pluie."; }
+    } else if(imgStats.yellow > 0.4 && imgStats.green > 20){ score=82; maladie="🍂 Chlorose / Carence - Pour Agriculteurs"; trait="Fumier FIMA + purin papayer + savon."; }
+    else if(imgStats.green > 60){ score=92; maladie="✅ Plante saine - Pour Agriculteurs"; trait="Entretien OK. Surveiller pluie."; }
   }
   if(score===0){
-    if(sympt.includes('jaune')||sympt.includes('mosaique')||sympt.includes('tache')){score=88; maladie='Mosaïque du manioc (CMD) - Très probable'; trait="Arracher plants atteints, planter variété résistante INERA. Neem + savon.";}
-    else if(sympt.includes('pourri')||sympt.includes('brun')){score=72; maladie='Pourriture racinaire'; trait="Drainer, éviter excès eau, fongicide bio.";}
-    else if(sympt.includes('inond')||sympt.includes('eau')){score=90; maladie='Excès eau - Asphyxie'; trait="Drainage urgent rigoles.";}
-    else {score=75; maladie='Stress général / Sol pauvre'; trait="Compost FIMA, rotation, analyse sol INERA.";}
+    if(sympt.includes('jaune')||sympt.includes('mosaique')||sympt.includes('tache')){score=88; maladie='Mosaïque manioc (CMD) - Pour Agriculteurs'; trait="Arracher plants atteints, variété résistante INERA. Neem + savon.";}
+    else if(sympt.includes('pourri')||sympt.includes('brun')){score=72; maladie='Pourriture racinaire - Pour Agriculteurs'; trait="Drainer, éviter excès eau, fongicide bio.";}
+    else if(sympt.includes('inond')||sympt.includes('eau')){score=90; maladie='Excès eau - Pour Agriculteurs'; trait="Drainage urgent rigoles.";}
+    else {score=75; maladie='Stress général / Sol pauvre - Pour Agriculteurs'; trait="Compost FIMA, rotation.";}
   }
   const res=document.getElementById('result');
   const title=document.getElementById('resTitle');
@@ -144,12 +143,12 @@ document.getElementById('btnDiag').onclick=()=>{
   const proof=document.getElementById('resGpsProof');
   const kpis=document.getElementById('kpis');
   res.style.display='block';
-  if(score>=85){res.className='result green'; title.textContent='✅ '+maladie+' - CONFIRMÉ FORUM ('+score+'%)';}
+  if(score>=85){res.className='result green'; title.textContent='✅ '+maladie+' - CONFIRMÉ ('+score+'%)';}
   else if(score>=60){res.className='result orange'; title.textContent='⚠️ '+maladie+' - SUSPECT ('+score+'%)';}
   else {res.className='result red'; title.textContent='❌ '+maladie+' - À vérifier ('+score+'%)';}
-  lastDiagText=`${maladie}. Confiance ${score}%. Traitement: ${trait}. Village ${gpsData.village}`;
-  desc.textContent=`Seuil Expert FORUM: 85% VERT (validé Dr Dium). Symptômes: "${document.getElementById('sympt').value||'analyse IA'}" | Traitement: ${trait}`;
-  proof.innerHTML=`<b>🔒 PREUVE GPS FORUM:</b><br>📍 ${gpsData.note}<br>🏘️ Village: ${gpsData.village} | Précision: ${gpsData.acc}m | ${gpsData.timestamp}<br>🔗 OSM: https://www.openstreetmap.org/?mlat=${gpsData.latOSM}&mlon=${gpsData.lonOSM}#map=16/${gpsData.latOSM}/${gpsData.lonOSM}`;
+  lastDiagText=`${maladie}. Confiance ${score}%. Traitement: ${trait}. Village ${gpsData.village} - Pour Agriculteurs`;
+  desc.textContent=`Application Mondiale pour AGRICULTEURS | Seuil 85% VERT | Symptômes: "${document.getElementById('sympt').value||'analyse IA'}" | Traitement: ${trait}`;
+  proof.innerHTML=`<b>🔒 PREUVE GPS AGRICULTEURS - MONDIAL:</b><br>📍 Village: ${gpsData.village} - Pour Agriculteurs<br>🌍 OSM Global: ${gpsData.latOSM}, ${gpsData.lonOSM} | Précision: ${gpsData.acc}m<br>🔗 https://www.openstreetmap.org/?mlat=${gpsData.latOSM}&mlon=${gpsData.lonOSM}#map=16/${gpsData.latOSM}/${gpsData.lonOSM}`;
   if(imgStats){
     kpis.style.display='grid';
     kpis.innerHTML=`<div class="kpi"><b>${imgStats.green.toFixed(1)}%</b>Vert</div><div class="kpi"><b>${imgStats.yellow.toFixed(1)}%</b>Jaune</div><div class="kpi"><b>${imgStats.water.toFixed(1)}%</b>Eau</div>`;
@@ -160,14 +159,14 @@ function speakFIMA(lang){
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance();
   if(lang==='fr'){u.lang='fr-FR'; u.text=lastDiagText;}
-  if(lang==='en'){u.lang='en-US'; u.text=`In English. ${lastDiagText}. Use FIMA bio.`;}
-  if(lang==='sw'){u.lang='sw-KE'; u.text=`Kwa Kiswahili. ${lastDiagText}. Tumia FIMA.`;}
-  if(lang==='ln'){u.lang='fr-CD'; u.text=`Na Lingala. ${lastDiagText}. Salela FIMA.`;}
+  if(lang==='en'){u.lang='en-US'; u.text=`For Farmers. ${lastDiagText}. Use FIMA bio.`;}
+  if(lang==='sw'){u.lang='sw-KE'; u.text=`Kwa Wakulima. ${lastDiagText}. Tumia FIMA.`;}
+  if(lang==='ln'){u.lang='fr-CD'; u.text=`Pona Bakulutu. ${lastDiagText}. Salela FIMA.`;}
   u.rate=0.9; speechSynthesis.speak(u);
 }
 function shareWA(){
   if(!lastDiagText){alert("Diagnostique d'abord!");return;}
-  const text=`*FIMA V4.4.1 PRO* 🌿\n${lastDiagText}\n\n📍 ${gpsData.village} - ${gpsData.latOSM},${gpsData.lonOSM}\nVia fima-part-tech.github.io/FIMA/`;
+  const text=`*FIMA V4.4.2 GLOBAL - Pour AGRICULTEURS* 🌍🌿\n${lastDiagText}\n\n📍 Village: ${gpsData.village} - Mondial\n🌍 ${gpsData.latOSM},${gpsData.lonOSM}\nApplication Mondiale pour Agriculteurs\nfima-part-tech.github.io/FIMA/`;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');
 }
 </script>
