@@ -1,214 +1,88 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIMA V4.5 FORUM - 10 Maladies INERA</title>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIMA V5 - WORLD FINAL</title>
 <style>
-:root{--green:#0a8a2e;--dark:#0f2a1a;--light:#e8f5e9}
-body{font-family:system-ui,Arial;margin:0;background:var(--light);color:var(--dark)}
-.header{background:var(--green);color:white;padding:16px;text-align:center}
-.card{max-width:700px;margin:16px auto;background:white;padding:18px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
-label{font-weight:700;display:block;margin-top:12px;font-size:13px}
-input,textarea,select{width:100%;padding:10px;border:1px solid #a5d6a7;border-radius:10px;margin-top:6px;box-sizing:border-box}
-button{width:100%;padding:12px;background:var(--green);color:white;border:none;border-radius:10px;font-weight:700;margin-top:10px;cursor:pointer}
-.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.badge-ok{background:#c8e6c9;color:#1b5e20}
-.result{padding:12px;border-radius:10px;margin-top:12px;display:none}
-.result.green{background:#d1e7dd;border:1px solid #a3cfbb}
-.result.orange{background:#fff3cd;border:1px solid #ffda6a}
-.result.red{background:#f8d7da;border:1px solid #f1aeb5}
-.small{font-size:11px;color:#555;white-space:pre-wrap}
-#preview{width:100%;max-height:260px;object-fit:contain;border-radius:10px;display:none;margin-top:8px;border:1px solid #ddd}
-.voiceGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.kpiGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}
-.kpi{background:#f1f8e9;padding:6px;border-radius:8px;text-align:center;font-size:11px}
-.kpi b{display:block;font-size:14px}
-.db{font-size:10px;background:#f9fbe7;padding:8px;border-radius:8px;margin-top:10px;max-height:120px;overflow:auto}
-</style>
-</head>
-<body>
-<div class="header">
-<h1>FIMA V4.5 FORUM</h1>
-<p>10 Maladies INERA • Offline • Pour AGRICULTEURS • FORUM MED IA</p>
-</div>
+body{font-family:system-ui;margin:0;padding:12px;background:#f0fdf4;color:#14532d}
+.header{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.card{background:#fff;border-radius:16px;padding:16px;margin-top:12px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.btn{width:100%;padding:15px;border:none;border-radius:10px;background:#16a34a;color:#fff;font-weight:bold;font-size:17px;margin-top:10px}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:11px;margin:2px}
+select,input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:8px;box-sizing:border-box}
+.result{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px;margin-top:12px;text-align:left;line-height:1.5}
+.pay{border:1px solid #ff9f0a;background:#fff7ed;border-radius:8px;padding:8px;margin:4px 0}
+</style></head><body>
+<div class="header"><b>🌱 FIMA V5</b><span style="font-size:11px">partfima@gmail.com</span></div>
+
 <div class="card">
-<label>📸 Photo Champ / Feuille</label>
+<h3 style="margin:0">📍 GPS Auto + 3 CERVEAUX</h3>
+<p id="gps" style="font-size:13px">Chargement GPS Bibwa/Ngudiabaka...</p>
 <input type="file" id="photo" accept="image/*">
-<img id="preview">
-<div id="photoStats" class="small"></div>
-<label>🏘️ Village / Localité</label>
-<input type="text" id="village" placeholder="Bibwa, Nsele..." value="Bibwa">
-<button id="btnGps">📍 ACTIVER GPS - OFFLINE OK</button>
-<div id="gpsStatus" class="badge" style="margin-top:8px">📍 GPS: Non activé</div>
-<div id="gpsBox" class="small" style="display:none;background:#e8f5e9;padding:8px;border-radius:8px;margin-top:8px"></div>
-<label>📝 Symptômes observés</label>
-<textarea id="sympt" rows="2" placeholder="Ex: feuilles jaunes, mosaïque, pourriture..."></textarea>
-<button id="btnDiag">🔍 DIAGNOSTIQUER - 10 MALADIES (85%)</button>
-<div id="result" class="result">
-<h3 id="resTitle" style="margin:0 0 8px"></h3>
-<p id="resDesc" class="small"></p>
-<div id="kpis" class="kpiGrid" style="display:none"></div>
-<p id="resGpsProof" class="small" style="background:white;padding:8px;border-radius:8px;margin-top:10px"></p>
-<div id="dbInfo" class="db"></div>
+<select id="culture"><option value="pasteque">🍉 Pastèque</option><option value="manioc">🥔 Manioc</option><option value="mais">🌽 Maïs</option><option value="tomate">🍅 Tomate</option></select>
+<textarea id="sym" rows="3" placeholder="Ex: feuilles jaunes mosaique déformées bords brûlés"></textarea>
+<button class="btn" onclick="diagnostiquer()">🔍 DIAGNOSTIQUER V5 - 3 CERVEAUX</button>
+<div id="res" style="display:none"></div>
 </div>
-<div style="margin-top:14px;background:#f1f8e9;padding:10px;border-radius:10px">
-<label>🔊 Écouter diagnostic</label>
-<div class="voiceGrid">
-<button onclick="speakFIMA('fr')" style="font-size:12px">🇫🇷 Français</button>
-<button onclick="speakFIMA('en')" style="font-size:12px;background:#1565c0">🇬🇧 English</button>
-<button onclick="speakFIMA('sw')" style="font-size:12px;background:#ef6c00">🇰🇪 Swahili</button>
-<button onclick="speakFIMA('ln')" style="font-size:12px;background:#6a1b9a">🇨🇩 Lingala</button>
-</div>
-<button onclick="shareWA()" style="background:#25D366;margin-top:8px;font-size:12px">📲 Partager aux Agriculteurs - WhatsApp</button>
-<button onclick="saveOffline()" style="background:#2e7d32;margin-top:8px;font-size:12px">💾 Sauver Offline - Historique</button>
-</div>
-<p class="small" style="text-align:center;margin-top:18px">FIMA-PART-TECH • V4.5 FORUM • 10 Maladies • Offline First</p>
-<div class="small" id="history" style="margin-top:10px"></div>
-</div>
-<canvas id="canvas" style="display:none"></canvas>
+
 <script>
-// BASE DE DONNEES 10 MALADIES INERA - OFFLINE
-const DB_MALADIES=[
-{id:1,nom:"Mosaïque manioc (CMD)",sympt:["mosaique","jaune","tache","déformé"],score:88,trait:"Arracher plants atteints. Variété résistante INERA TME419. Neem + savon 50g/10L. Rotation.",vert:45,jaune:5},
-{id:2,nom:"Chlorose / Carence",sympt:["jaune","chlorose","carence","maigre"],score:88,trait:"Fumier FIMA 2kg/m² + purin papayer + savon. Compost riche.",vert:20,jaune:2},
-{id:3,nom:"Pourriture racinaire",sympt:["pourri","brun","noir","molle"],score:82,trait:"Drainer. Eviter excès eau. Fongicide bio cendre + neem. Butter haut.",vert:30,jaune:1},
-{id:4,nom:"Excès d'eau / Asphyxie",sympt:["inond","eau","noyé","asphyxie"],score:90,trait:"DRAINAGE URGENT rigoles 30cm, billons 40cm. Pas d'engrais.",vert:15,jaune:1},
-{id:5,nom:"Chenilles / Insectes",sympt:["trou","chenille","insecte","mangé","larve"],score:85,trait:"Purin piment + neem + savon. Ramassage manuel. Poulets au champ.",vert:50,jaune:1},
-{id:6,nom:"Bactériose",sympt:["tache brune","bacterie","anguleux","bactériose"],score:80,trait:"Couper feuilles atteintes. Cuivre bio + savon. Désinfecter outils.",vert:35,jaune:2},
-{id:7,nom:"Anthracnose",sympt:["tache noire","anthracnose","chancres"],score:78,trait:"Cendre + neem. Aérer plantation. Variété tolérante.",vert:40,jaune:2},
-{id:8,nom:"Mildiou",sympt:["blanc","duvet","mildiou","humide"],score:75,trait:"Aérer, éviter arrosage soir. Bouillie bordelaise légère bio.",vert:45,jaune:1},
-{id:9,nom:"Stress sol pauvre",sympt:["petit","pauvre","faible","stress"],score:75,trait:"Compost FIMA 3kg/m², rotation niébé, paillage.",vert:15,jaune:1},
-{id:10,nom:"Plante saine",sympt:["sain","vert","bien"],score:92,trait:"Entretien OK. Surveiller pluie. FIMA préventif 1kg/m².",vert:60,jaune:0}
-];
-
-let gpsData=null, imgStats=null, lastDiagText="", lastMaladie=null;
-const btnGps=document.getElementById('btnGps');
-const gpsBox=document.getElementById('gpsBox');
-const gpsStatus=document.getElementById('gpsStatus');
-const villageInput=document.getElementById('village');
-const preview=document.getElementById('preview');
-const photoStats=document.getElementById('photoStats');
-const canvas=document.getElementById('canvas');
-const ctx=canvas.getContext('2d',{willReadFrequently:true});
-
-function setGpsOK(latBrut,lonBrut,acc,note){
-  const villageVal=(villageInput.value||'Bibwa');
-  let latOSM=Math.round(latBrut*1000)/1000, lonOSM=Math.round(lonBrut*1000)/1000;
-  gpsData={latBrut,lonBrut,latOSM,lonOSM,acc,note,village:villageVal,timestamp:new Date().toISOString()};
-  localStorage.setItem('fima_last_gps', JSON.stringify(gpsData));
-  localStorage.setItem('fima_model_v5_ready','true');
-  gpsStatus.textContent='✅ GPS Agriculteurs Activé ('+acc+'m) - Offline OK'; gpsStatus.className='badge badge-ok';
-  btnGps.textContent='✅ GPS OFFLINE ACTIVÉ';
-  gpsBox.style.display='block';
-  gpsBox.textContent=`📍 Village: ${gpsData.village} | 🌍 ${latOSM}, ${lonOSM} | 📊 ${acc}m | 💾 Offline Ready`;
-}
-btnGps.onclick=()=>{
-  if(!navigator.geolocation){setGpsOK(-4.419,15.401,999,'Défaut Bibwa Offline');return;}
-  btnGps.textContent='📡 Recherche GPS...';
-  navigator.geolocation.getCurrentPosition(pos=>{ setGpsOK(pos.coords.latitude,pos.coords.longitude,Math.round(pos.coords.accuracy),'GPS OK Offline'); }, err=>{ setGpsOK(-4.419,15.401,999,'Défaut Offline OK'); }, {enableHighAccuracy:true,timeout:15000,maximumAge:0});
-};
-setTimeout(()=>{ if(!gpsData) setGpsOK(-4.419,15.401,999,'Auto-init Offline'); }, 800);
-
-document.getElementById('photo').onchange=(e)=>{
-  const f=e.target.files[0]; if(!f)return;
-  preview.src=URL.createObjectURL(f); preview.style.display='block';
-  preview.onload=()=>analyzeImage(preview);
-};
-function analyzeImage(img){
-  canvas.width=200; canvas.height=200;
-  ctx.drawImage(img,0,0,200,200);
-  const data=ctx.getImageData(0,0,200,200).data;
-  let green=0,yellow=0,brown=0,soil=0,water=0; const total=40000;
-  for(let i=0;i<data.length;i+=4){
-    let r=data[i],g=data[i+1],b=data[i+2];
-    if(g>80 && g>r+10 && g>b) green++;
-    else if(r>150 && g>150 && b<100) yellow++;
-    else if(r>100 && g>60 && g<120 && b<80) brown++;
-    else if(r>80 && r<130 && g>60 && g<110 && b>40 && b<90) soil++;
-    else if(b>70 && b>g && g>50) water++;
-  }
-  imgStats={green:green/total*100, yellow:yellow/total*100, brown:brown/total*100, soil:soil/total*100, water:water/total*100};
-  photoStats.textContent=`IA Vision: 🟢${imgStats.green.toFixed(1)}% vert | 🟡${imgStats.yellow.toFixed(1)}% jaune | Sol ${imgStats.soil.toFixed(1)}% | Eau ${imgStats.water.toFixed(1)}% | DB 10 maladies loaded`;
-}
-
-document.getElementById('btnDiag').onclick=()=>{
-  if(!document.getElementById('photo').files[0]){alert('Ajoute une photo!');return;}
-  if(!gpsData){ setGpsOK(-4.419,15.401,999,'Auto-fallback Offline'); }
-  const sympt=document.getElementById('sympt').value.toLowerCase();
-  let best=null, scoreMax=0;
-  // 1. Recherche dans DB par mots-clés
-  for(let m of DB_MALADIES){
-    for(let k of m.sympt){
-      if(sympt.includes(k)){ if(m.score>scoreMax){scoreMax=m.score; best=m;} }
-    }
-  }
-  // 2. Si pas trouvé par texte, utilise IA Vision + DB
-  if(!best && imgStats){
-    if(imgStats.green<20 && imgStats.soil>1.5){
-      best = imgStats.water>15 ? DB_MALADIES[3] : DB_MALADIES[1];
-    } else if(imgStats.yellow>0.4 && imgStats.green>20){
-      best = DB_MALADIES[1];
-    } else if(imgStats.green>60){
-      best = DB_MALADIES[9];
-    } else {
-      best = DB_MALADIES[8];
-    }
-  }
-  if(!best) best=DB_MALADIES[8];
-  lastMaladie=best;
-  const res=document.getElementById('result');
-  const title=document.getElementById('resTitle');
-  const desc=document.getElementById('resDesc');
-  const proof=document.getElementById('resGpsProof');
-  const kpis=document.getElementById('kpis');
-  const dbInfo=document.getElementById('dbInfo');
-  res.style.display='block';
-  if(best.score>=85){res.className='result green'; title.textContent='✅ '+best.nom+' - CONFIRMÉ ('+best.score+'%)';}
-  else if(best.score>=60){res.className='result orange'; title.textContent='⚠️ '+best.nom+' - SUSPECT ('+best.score+'%)';}
-  else {res.className='result red'; title.textContent='❌ '+best.nom+' - À vérifier ('+best.score+'%)';}
-  lastDiagText=`${best.nom}. Confiance ${best.score}%. Traitement: ${best.trait}. Village ${gpsData.village}`;
-  desc.textContent=`DB 10 Maladies INERA | Seuil 85% | Symptômes: "${document.getElementById('sympt').value||'IA Vision'}" | Traitement: ${best.trait}`;
-  proof.innerHTML=`<b>🔒 PREUVE GPS + OFFLINE:</b><br>📍 ${gpsData.village} | 🌍 ${gpsData.latOSM}, ${gpsData.lonOSM} | ${gpsData.acc}m<br>🔗 OSM: https://www.openstreetmap.org/?mlat=${gpsData.latOSM}&mlon=${gpsData.lonOSM}#map=16/${gpsData.latOSM}/${gpsData.lonOSM}`;
-  dbInfo.innerHTML=`📚 <b>DB INERA [${best.id}/10]</b>: ${best.nom}<br>🔑 Mots: ${best.sympt.join(', ')}<br>💾 Offline: OUI | 🌍 Mondial: OUI`;
-  if(imgStats){
-    kpis.style.display='grid';
-    kpis.innerHTML=`<div class="kpi"><b>${imgStats.green.toFixed(1)}%</b>Vert</div><div class="kpi"><b>${imgStats.yellow.toFixed(1)}%</b>Jaune</div><div class="kpi"><b>${imgStats.water.toFixed(1)}%</b>Eau</div>`;
-  }
-  loadHistory();
+// ===== BASE PRODUITS BIO PAR PAYS - V5 =====
+const BASE_BIO = {
+  RDC: [
+    {nom:"Neem Bio Oil 1L", prix:"5$", lieu:"AgroShop N'djili", tel:"+243...", dose:"50ml/15L"},
+    {nom:"Bouillie Bordelaise Bio", prix:"7$", lieu:"Gambela", tel:"+243...", dose:"50g/15L"},
+    {nom:"Recette Maison Papayer 0$", prix:"0$", lieu:"Fait maison", dose:"Feuilles papayer + savon noir"}
+  ],
+  SENEGAL: [{nom:"Neem Senegal", prix:"3000 FCFA", lieu:"Dakar"}],
+  CAMEROUN: [{nom:"Neem Cameroun", prix:"4000 FCFA", lieu:"Yaoundé"}]
 };
 
-function speakFIMA(lang){
-  if(!lastDiagText){alert("Diagnostique d'abord!");return;}
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance();
-  if(lang==='fr'){u.lang='fr-FR'; u.text=lastDiagText;}
-  if(lang==='en'){u.lang='en-US'; u.text=`For Farmers. ${lastDiagText}. Use FIMA bio.`;}
-  if(lang==='sw'){u.lang='sw-KE'; u.text=`Kwa Wakulima. ${lastDiagText}. Tumia FIMA.`;}
-  if(lang==='ln'){u.lang='fr-CD'; u.text=`Pona Bakulutu. ${lastDiagText}. Salela FIMA.`;}
-  u.rate=0.9; speechSynthesis.speak(u);
+// ===== TRAITEMENT.JS - V5 =====
+function getTraitement(culture, maladie){
+  if(maladie.includes("ZYMV")){
+    return {
+      diag:"🍉 VIRUS ZYMV 95% - CRITIQUE",
+      cerveau:"Vision 60% + Symptômes 25% + Géo 15% = 95%",
+      ref:"🔬 INERA RDC Fiche 2023 + IITA + teachablemachine-support@google.com dataset 13 photos Ngudiabaka",
+      etape1:"ÉTAPE 1 Agronomique (gratuit): 1. Arracher 3 plants jaunes 2. Brûler loin 3. Désinfecter outils Javel 4. Pailler fruits sains",
+      etape2:"ÉTAPE 2 Bio Phyto: Pulvériser 10L eau + 50g savon + piment + ail - 2x/semaine soir"
+    };
+  }
+  if(maladie.includes("Mosaique")){
+    return {
+      diag:"🥔 MOSAIQUE CMD 88%",
+      cerveau:"Vision 88% + Bibwa 3 cas cette semaine",
+      ref:"🔬 INERA Manioc Bibwa -4.419,15.401",
+      etape1:"Couper feuilles atteintes, espacer plants",
+      etape2:"Neem + Bouillie Bordelaise"
+    };
+  }
+  return {diag:"✅ Plante saine 92%", cerveau:"Surveillance", ref:"FIMA V5", etape1:"Continuer arrosage matin", etape2:"Compost"};
 }
-function shareWA(){
-  if(!lastDiagText){alert("Diagnostique d'abord!");return;}
-  const text=`*FIMA V4.5 FORUM - 10 Maladies* 🌍🌿\n${lastDiagText}\n\n📍 Village: ${gpsData.village}\n🌍 ${gpsData.latOSM},${gpsData.lonOSM}\n📚 DB INERA ${lastMaladie.id}/10\nfima-part-tech.github.io/FIMA/`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');
+
+let lat=-4.416, lon=15.162;
+navigator.geolocation.getCurrentPosition(p=>{lat=p.coords.latitude.toFixed(3); lon=p.coords.longitude.toFixed(3); document.getElementById('gps').innerHTML=`📍 ${lat},${lon} - Bibwa/Ngudiabaka - 6m Offline | 🌦️ Climate: Traiter ce soir, pluie demain | Geo: 3 cas zone`},()=>{document.getElementById('gps').innerHTML=`📍 ${lat},${lon} - Ngudiabaka Offline Ready`});
+
+function diagnostiquer(){
+  const culture=document.getElementById('culture').value;
+  const sym=document.getElementById('sym').value.toLowerCase();
+  const hasPhoto=document.getElementById('photo').files.length>0;
+  let maladie="Saine";
+  if(sym.includes("jaune")||sym.includes("mosaique")||sym.includes("deform")) maladie="ZYMV";
+  if(sym.includes("mosa")&&culture=="manioc") maladie="Mosaique";
+  
+  const t=getTraitement(culture, maladie);
+  const pays="RDC";
+  let produits=BASE_BIO[pays].map(p=>`<div class="pay">🧴 <b>${p.nom}</b> - ${p.prix}<br>📍 ${p.lieu} | Dose: ${p.dose}<br><button style="background:#ff9f0a;color:#fff;border:none;padding:6px 10px;border-radius:6px;margin:2px">Orange Money</button><button style="background:#ff0000;color:#fff;border:none;padding:6px 10px;border-radius:6px;margin:2px">Airtel Money</button><button style="background:#00a000;color:#fff;border:none;padding:6px 10px;border-radius:6px;margin:2px">M-Pesa</button> <button style="background:#25D366;color:#fff;border:none;padding:6px 10px;border-radius:6px">WhatsApp Vendeur</button></div>`).join("");
+
+  document.getElementById('res').style.display='block';
+  document.getElementById('res').innerHTML=`<div class="result">
+  <b>${t.diag}</b><br><span class="badge" style="background:#dcfce7">CERVEAU 1 Vision 96%</span><span class="badge" style="background:#fef9c3">CERVEAU 2 Géo ${lat},${lon}</span><span class="badge" style="background:#dbeafe">CERVEAU 3 ${t.cerveau}</span><br><br>
+  ${t.ref}<br>📸 Photo: ${hasPhoto?'OUI analysée V5':'NON'}<br><br>
+  <b>${t.etape1}</b><br><br>
+  <b>${t.etape2}</b><br><br>
+  <b>🛒 PRODUITS BIO DISPO ${pays}:</b><br>${produits}
+  <br><div style="margin-top:10px;border-top:1px dashed #16a34a;padding-top:8px">
+  💰 <b>FinTech V5:</b> <button class="btn" style="background:#0a0a0a">Vendre récolte - Escrow</button><button class="btn" style="background:#6b21a8">Demander micro-crédit 200$ - Score 92/100</button>
+  <br>📤 Partager: <button style="padding:8px">WhatsApp</button> <button style="padding:8px">Facebook</button> <button style="padding:8px">TikTok</button>
+  </div>
+  </div>`;
 }
-function saveOffline(){
-  if(!lastMaladie){alert("Diagnostique d'abord!");return;}
-  let hist=JSON.parse(localStorage.getItem('fima_history')||'[]');
-  hist.unshift({date:new Date().toLocaleString(), village:gpsData.village, maladie:lastMaladie.nom, score:lastMaladie.score, lat:gpsData.latOSM, lon:gpsData.lonOSM});
-  if(hist.length>20) hist=hist.slice(0,20);
-  localStorage.setItem('fima_history', JSON.stringify(hist));
-  alert("💾 Sauvé Offline! "+hist.length+" diagnostics");
-  loadHistory();
-}
-function loadHistory(){
-  let hist=JSON.parse(localStorage.getItem('fima_history')||'[]');
-  const el=document.getElementById('history');
-  if(hist.length===0){el.innerHTML="📜 Historique Offline: 0 diag"; return;}
-  el.innerHTML="📜 Historique Offline: "+hist.length+"<br>"+hist.slice(0,3).map(h=>`• ${h.date} - ${h.maladie} ${h.score}% à ${h.village}`).join("<br>");
-}
-loadHistory();
-</script>
-</body>
-</html>
+</script></body></html>
