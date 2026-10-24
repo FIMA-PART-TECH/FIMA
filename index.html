@@ -1,82 +1,23 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FIMA V5.1 N'Sele</title>
-<style>
-body{font-family:Arial;background:#f0fff0;padding:10px}
-.card{background:white;padding:15px;border-radius:15px;box-shadow:0 2px 10px #ccc;margin-bottom:10px}
-.btn{display:block;padding:12px;margin:6px 0;border-radius:10px;text-align:center;color:white;text-decoration:none;font-weight:bold}
-.green{background:#25D366} .orange{background:#FF7900} .red{background:#E60000} .blue{background:#1877F2} .black{background:#000}
-</style>
-</head>
-<body>
-<div class="card">
-<h2>FIMA V5.1 ✅ BOUTONS ACTIFS</h2>
-<p>partfima@gmail.com</p>
-<p id="gps">📍 -4.358,15.490 - N'Sele - 6m - Recherche GPS...</p>
-</div>
-
-<div class="card">
-<input type="file" id="photo" accept="image/*">
-<select id="culture"><option>🍉 Pastèque</option><option>🌽 Maïs</option><option>🍅 Tomate</option></select>
-<textarea id="symp" style="width:100%;height:60px">feuilles jaunes mosaique déformées bords brûlés</textarea>
-<button onclick="diagnostiquer()" class="btn green">🔍 DIAGNOSTIQUER V5.1 - 3 CERVEAUX</button>
-</div>
-
-<div id="result" class="card" style="display:none"></div>
-
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIMA V5.2</title>
+<style>body{font-family:Arial;background:#f0fff0;padding:12px}.card{background:white;padding:15px;border-radius:15px;margin-bottom:10px}.btn{display:block;padding:14px;margin:8px 0;border-radius:12px;text-align:center;color:white;font-weight:bold;text-decoration:none}.green{background:#25D366}.orange{background:#FF7900}.red{background:#E60000}.blue{background:#1877F2}</style>
+</head><body>
+<div class="card"><h2>FIMA V5.2 N'Sele ✅</h2><p id="gps">📍 GPS -4.358,15.490 N'Sele</p></div>
+<div class="card"><button onclick="diag()" class="btn green">🔍 DIAGNOSTIQUER</button></div>
+<div id="r" class="card" style="display:none"></div>
 <script>
-// GPS AUTO N'SELE
-navigator.geolocation.getCurrentPosition(p=>{
- document.getElementById('gps').innerText=`📍 ${p.coords.latitude.toFixed(3)},${p.coords.longitude.toFixed(3)} - N'Sele - ${p.coords.accuracy.toFixed(0)}m Online | 🌦️ Traiter ce soir`;
-},{},{enableHighAccuracy:true});
-function diagnostiquer(){
- const r=document.getElementById('result');
- r.style.display='block';
- r.innerHTML=`
- <h3>🍉 VIRUS ZYMV 95% - CRITIQUE</h3>
- <p>CERVEAU 1 Vision 96% | CERVEAU 2 Géo N'Sele | CERVEAU 3 95%</p>
- <p><b>ÉTAPE 1:</b> Arracher 3 plants jaunes, brûler loin, Javel outils</p>
- <p><b>ÉTAPE 2:</b> 10L eau + 50g savon + piment + ail - 2x/semaine soir</p>
- 
- <h4>🛒 PRODUITS BIO DISPO RDC:</h4>
- <a class="btn green" href="#" onclick="whatsapp('Neem Bio Oil 1L 5$ AgroShop Ndjili')">🧴 Neem 5$ - WhatsApp Vendeur</a>
- <a class="btn orange" href="#" onclick="pay('Orange Money *144# Neem 5$')">🟠 Orange Money 5$ - Payer</a>
- <a class="btn red" href="#" onclick="pay('Airtel Money *501# Neem 5$')">🔴 Airtel Money 5$ - Payer</a>
- <a class="btn blue" href="#" onclick="pay('M-Pesa *422# Neem 5$')">🔵 M-Pesa 5$ - Payer</a>
- 
- <h4>💰 FinTech V5.1:</h4>
- <a class="btn green" href="#" onclick="whatsapp('Je veux vendre récolte N\\'Sele - FIMA V5.1')">💰 Vendre récolte - Escrow</a>
- <a class="btn black" href="#" onclick="whatsapp('Demande micro-crédit 200$ Score 92/100 N\\'Sele')">💳 Micro-crédit 200$ - Demander</a>
-
- <h4>📤 Partager diagnostic:</h4>
- <a class="btn green" href="#" onclick="partage('whatsapp')">WhatsApp</a>
- <a class="btn blue" href="#" onclick="partage('facebook')">Facebook</a>
- <a class="btn black" href="#" onclick="partage('tiktok')">TikTok - Copier</a>
- `;
-}
-
-function whatsapp(msg){
- const text=encodeURIComponent(msg+" | FIMA V5.1 N'Sele -4.358,15.490 | ZYMV 95% | partfima@gmail.com");
- window.open("https://wa.me/243900000000?text="+text,"_blank");
- // Offline fallback: copie
- navigator.clipboard.writeText(decodeURIComponent(text));
- alert("✅ Message copié! Colle dans WhatsApp: "+decodeURIComponent(text).substring(0,100));
-}
-
-function pay(methode){
- navigator.clipboard.writeText(methode);
- alert("✅ "+methode+" copié! Tape-le dans ton téléphone. Offline OK N'Sele!");
-}
-
-function partage(reseau){
- const txt="🍉 FIMA V5.1 N'Sele ZYMV 95% - Traitement Neem 5$ - GPS -4.358,15.490 - partfima@gmail.com https://partfima.github.io";
- if(reseau=='whatsapp') whatsapp(txt);
- if(reseau=='facebook'){ navigator.clipboard.writeText(txt); alert("Texte copié pour Facebook!"); window.open("https://facebook.com/sharer/sharer.php?u="+encodeURIComponent(txt)); }
- if(reseau=='tiktok'){ navigator.clipboard.writeText(txt); alert("✅ Texte copié pour TikTok! Colle dans ta vidéo."); }
-}
-</script>
-</body>
-</html>
+navigator.geolocation.getCurrentPosition(p=>{document.getElementById('gps').innerText="📍 "+p.coords.latitude.toFixed(3)+","+p.coords.longitude.toFixed(3)+" N'Sele "+p.coords.accuracy.toFixed(0)+"m";});
+function diag(){
+document.getElementById('r').style.display='block';
+document.getElementById('r').innerHTML=`
+<h3>🍉 VIRUS ZYMV 95%</h3>
+<p>Traitement: Savon + piment + ail - Soir</p>
+<a class="btn green" onclick="wa('Commande Neem Bio 5$ FIMA N\\'Sele')">🟢 WhatsApp Vendeur - Neem 5$</a>
+<a class="btn orange" onclick="copy('Orange Money *144# 5$ Neem')">🟠 Orange Money - Copier *144#</a>
+<a class="btn red" onclick="copy('Airtel *501# 5$ Neem')">🔴 Airtel Money - Copier *501#</a>
+<a class="btn blue" onclick="wa('Partage diagnostic FIMA V5.2 N\\'Sele ZYMV 95% partfima@gmail.com')">🔵 Partager sur WhatsApp</a>
+`;}
+function wa(m){let t=encodeURIComponent(m+" https://partfima.github.io");window.open("https://wa.me/?text="+t,"_blank");navigator.clipboard.writeText(decodeURIComponent(t));alert("✅ Ouvert WhatsApp! Choisis un contact!");}
+function copy(t){navigator.clipboard.writeText(t);alert("✅ Copié: "+t+" - Colle dans ton téléphone!");}
+</script></body></html>
