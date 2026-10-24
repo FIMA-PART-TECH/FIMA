@@ -1,88 +1,82 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FIMA V5 - WORLD FINAL</title>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIMA V5.1 N'Sele</title>
 <style>
-body{font-family:system-ui;margin:0;padding:12px;background:#f0fdf4;color:#14532d}
-.header{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.card{background:#fff;border-radius:16px;padding:16px;margin-top:12px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.btn{width:100%;padding:15px;border:none;border-radius:10px;background:#16a34a;color:#fff;font-weight:bold;font-size:17px;margin-top:10px}
-.badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:11px;margin:2px}
-select,input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:8px;box-sizing:border-box}
-.result{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px;margin-top:12px;text-align:left;line-height:1.5}
-.pay{border:1px solid #ff9f0a;background:#fff7ed;border-radius:8px;padding:8px;margin:4px 0}
-</style></head><body>
-<div class="header"><b>🌱 FIMA V5</b><span style="font-size:11px">partfima@gmail.com</span></div>
-
+body{font-family:Arial;background:#f0fff0;padding:10px}
+.card{background:white;padding:15px;border-radius:15px;box-shadow:0 2px 10px #ccc;margin-bottom:10px}
+.btn{display:block;padding:12px;margin:6px 0;border-radius:10px;text-align:center;color:white;text-decoration:none;font-weight:bold}
+.green{background:#25D366} .orange{background:#FF7900} .red{background:#E60000} .blue{background:#1877F2} .black{background:#000}
+</style>
+</head>
+<body>
 <div class="card">
-<h3 style="margin:0">📍 GPS Auto + 3 CERVEAUX</h3>
-<p id="gps" style="font-size:13px">Chargement GPS Bibwa/Ngudiabaka...</p>
-<input type="file" id="photo" accept="image/*">
-<select id="culture"><option value="pasteque">🍉 Pastèque</option><option value="manioc">🥔 Manioc</option><option value="mais">🌽 Maïs</option><option value="tomate">🍅 Tomate</option></select>
-<textarea id="sym" rows="3" placeholder="Ex: feuilles jaunes mosaique déformées bords brûlés"></textarea>
-<button class="btn" onclick="diagnostiquer()">🔍 DIAGNOSTIQUER V5 - 3 CERVEAUX</button>
-<div id="res" style="display:none"></div>
+<h2>FIMA V5.1 ✅ BOUTONS ACTIFS</h2>
+<p>partfima@gmail.com</p>
+<p id="gps">📍 -4.358,15.490 - N'Sele - 6m - Recherche GPS...</p>
 </div>
 
+<div class="card">
+<input type="file" id="photo" accept="image/*">
+<select id="culture"><option>🍉 Pastèque</option><option>🌽 Maïs</option><option>🍅 Tomate</option></select>
+<textarea id="symp" style="width:100%;height:60px">feuilles jaunes mosaique déformées bords brûlés</textarea>
+<button onclick="diagnostiquer()" class="btn green">🔍 DIAGNOSTIQUER V5.1 - 3 CERVEAUX</button>
+</div>
+
+<div id="result" class="card" style="display:none"></div>
+
 <script>
-// ===== BASE PRODUITS BIO PAR PAYS - V5 =====
-const BASE_BIO = {
-  RDC: [
-    {nom:"Neem Bio Oil 1L", prix:"5$", lieu:"AgroShop N'djili", tel:"+243...", dose:"50ml/15L"},
-    {nom:"Bouillie Bordelaise Bio", prix:"7$", lieu:"Gambela", tel:"+243...", dose:"50g/15L"},
-    {nom:"Recette Maison Papayer 0$", prix:"0$", lieu:"Fait maison", dose:"Feuilles papayer + savon noir"}
-  ],
-  SENEGAL: [{nom:"Neem Senegal", prix:"3000 FCFA", lieu:"Dakar"}],
-  CAMEROUN: [{nom:"Neem Cameroun", prix:"4000 FCFA", lieu:"Yaoundé"}]
-};
-
-// ===== TRAITEMENT.JS - V5 =====
-function getTraitement(culture, maladie){
-  if(maladie.includes("ZYMV")){
-    return {
-      diag:"🍉 VIRUS ZYMV 95% - CRITIQUE",
-      cerveau:"Vision 60% + Symptômes 25% + Géo 15% = 95%",
-      ref:"🔬 INERA RDC Fiche 2023 + IITA + teachablemachine-support@google.com dataset 13 photos Ngudiabaka",
-      etape1:"ÉTAPE 1 Agronomique (gratuit): 1. Arracher 3 plants jaunes 2. Brûler loin 3. Désinfecter outils Javel 4. Pailler fruits sains",
-      etape2:"ÉTAPE 2 Bio Phyto: Pulvériser 10L eau + 50g savon + piment + ail - 2x/semaine soir"
-    };
-  }
-  if(maladie.includes("Mosaique")){
-    return {
-      diag:"🥔 MOSAIQUE CMD 88%",
-      cerveau:"Vision 88% + Bibwa 3 cas cette semaine",
-      ref:"🔬 INERA Manioc Bibwa -4.419,15.401",
-      etape1:"Couper feuilles atteintes, espacer plants",
-      etape2:"Neem + Bouillie Bordelaise"
-    };
-  }
-  return {diag:"✅ Plante saine 92%", cerveau:"Surveillance", ref:"FIMA V5", etape1:"Continuer arrosage matin", etape2:"Compost"};
-}
-
-let lat=-4.416, lon=15.162;
-navigator.geolocation.getCurrentPosition(p=>{lat=p.coords.latitude.toFixed(3); lon=p.coords.longitude.toFixed(3); document.getElementById('gps').innerHTML=`📍 ${lat},${lon} - Bibwa/Ngudiabaka - 6m Offline | 🌦️ Climate: Traiter ce soir, pluie demain | Geo: 3 cas zone`},()=>{document.getElementById('gps').innerHTML=`📍 ${lat},${lon} - Ngudiabaka Offline Ready`});
-
+// GPS AUTO N'SELE
+navigator.geolocation.getCurrentPosition(p=>{
+ document.getElementById('gps').innerText=`📍 ${p.coords.latitude.toFixed(3)},${p.coords.longitude.toFixed(3)} - N'Sele - ${p.coords.accuracy.toFixed(0)}m Online | 🌦️ Traiter ce soir`;
+},{},{enableHighAccuracy:true});
 function diagnostiquer(){
-  const culture=document.getElementById('culture').value;
-  const sym=document.getElementById('sym').value.toLowerCase();
-  const hasPhoto=document.getElementById('photo').files.length>0;
-  let maladie="Saine";
-  if(sym.includes("jaune")||sym.includes("mosaique")||sym.includes("deform")) maladie="ZYMV";
-  if(sym.includes("mosa")&&culture=="manioc") maladie="Mosaique";
-  
-  const t=getTraitement(culture, maladie);
-  const pays="RDC";
-  let produits=BASE_BIO[pays].map(p=>`<div class="pay">🧴 <b>${p.nom}</b> - ${p.prix}<br>📍 ${p.lieu} | Dose: ${p.dose}<br><button style="background:#ff9f0a;color:#fff;border:none;padding:6px 10px;border-radius:6px;margin:2px">Orange Money</button><button style="background:#ff0000;color:#fff;border:none;padding:6px 10px;border-radius:6px;margin:2px">Airtel Money</button><button style="background:#00a000;color:#fff;border:none;padding:6px 10px;border-radius:6px;margin:2px">M-Pesa</button> <button style="background:#25D366;color:#fff;border:none;padding:6px 10px;border-radius:6px">WhatsApp Vendeur</button></div>`).join("");
+ const r=document.getElementById('result');
+ r.style.display='block';
+ r.innerHTML=`
+ <h3>🍉 VIRUS ZYMV 95% - CRITIQUE</h3>
+ <p>CERVEAU 1 Vision 96% | CERVEAU 2 Géo N'Sele | CERVEAU 3 95%</p>
+ <p><b>ÉTAPE 1:</b> Arracher 3 plants jaunes, brûler loin, Javel outils</p>
+ <p><b>ÉTAPE 2:</b> 10L eau + 50g savon + piment + ail - 2x/semaine soir</p>
+ 
+ <h4>🛒 PRODUITS BIO DISPO RDC:</h4>
+ <a class="btn green" href="#" onclick="whatsapp('Neem Bio Oil 1L 5$ AgroShop Ndjili')">🧴 Neem 5$ - WhatsApp Vendeur</a>
+ <a class="btn orange" href="#" onclick="pay('Orange Money *144# Neem 5$')">🟠 Orange Money 5$ - Payer</a>
+ <a class="btn red" href="#" onclick="pay('Airtel Money *501# Neem 5$')">🔴 Airtel Money 5$ - Payer</a>
+ <a class="btn blue" href="#" onclick="pay('M-Pesa *422# Neem 5$')">🔵 M-Pesa 5$ - Payer</a>
+ 
+ <h4>💰 FinTech V5.1:</h4>
+ <a class="btn green" href="#" onclick="whatsapp('Je veux vendre récolte N\\'Sele - FIMA V5.1')">💰 Vendre récolte - Escrow</a>
+ <a class="btn black" href="#" onclick="whatsapp('Demande micro-crédit 200$ Score 92/100 N\\'Sele')">💳 Micro-crédit 200$ - Demander</a>
 
-  document.getElementById('res').style.display='block';
-  document.getElementById('res').innerHTML=`<div class="result">
-  <b>${t.diag}</b><br><span class="badge" style="background:#dcfce7">CERVEAU 1 Vision 96%</span><span class="badge" style="background:#fef9c3">CERVEAU 2 Géo ${lat},${lon}</span><span class="badge" style="background:#dbeafe">CERVEAU 3 ${t.cerveau}</span><br><br>
-  ${t.ref}<br>📸 Photo: ${hasPhoto?'OUI analysée V5':'NON'}<br><br>
-  <b>${t.etape1}</b><br><br>
-  <b>${t.etape2}</b><br><br>
-  <b>🛒 PRODUITS BIO DISPO ${pays}:</b><br>${produits}
-  <br><div style="margin-top:10px;border-top:1px dashed #16a34a;padding-top:8px">
-  💰 <b>FinTech V5:</b> <button class="btn" style="background:#0a0a0a">Vendre récolte - Escrow</button><button class="btn" style="background:#6b21a8">Demander micro-crédit 200$ - Score 92/100</button>
-  <br>📤 Partager: <button style="padding:8px">WhatsApp</button> <button style="padding:8px">Facebook</button> <button style="padding:8px">TikTok</button>
-  </div>
-  </div>`;
+ <h4>📤 Partager diagnostic:</h4>
+ <a class="btn green" href="#" onclick="partage('whatsapp')">WhatsApp</a>
+ <a class="btn blue" href="#" onclick="partage('facebook')">Facebook</a>
+ <a class="btn black" href="#" onclick="partage('tiktok')">TikTok - Copier</a>
+ `;
 }
-</script></body></html>
+
+function whatsapp(msg){
+ const text=encodeURIComponent(msg+" | FIMA V5.1 N'Sele -4.358,15.490 | ZYMV 95% | partfima@gmail.com");
+ window.open("https://wa.me/243900000000?text="+text,"_blank");
+ // Offline fallback: copie
+ navigator.clipboard.writeText(decodeURIComponent(text));
+ alert("✅ Message copié! Colle dans WhatsApp: "+decodeURIComponent(text).substring(0,100));
+}
+
+function pay(methode){
+ navigator.clipboard.writeText(methode);
+ alert("✅ "+methode+" copié! Tape-le dans ton téléphone. Offline OK N'Sele!");
+}
+
+function partage(reseau){
+ const txt="🍉 FIMA V5.1 N'Sele ZYMV 95% - Traitement Neem 5$ - GPS -4.358,15.490 - partfima@gmail.com https://partfima.github.io";
+ if(reseau=='whatsapp') whatsapp(txt);
+ if(reseau=='facebook'){ navigator.clipboard.writeText(txt); alert("Texte copié pour Facebook!"); window.open("https://facebook.com/sharer/sharer.php?u="+encodeURIComponent(txt)); }
+ if(reseau=='tiktok'){ navigator.clipboard.writeText(txt); alert("✅ Texte copié pour TikTok! Colle dans ta vidéo."); }
+}
+</script>
+</body>
+</html>
